@@ -1,0 +1,27 @@
+<ion-header>
+  <app-header></app-header>
+</ion-header>
+<ion-content [fullscreen]="true">
+
+  <body>
+    <div class="contenedor-imagen">
+      <img src="../../../assets/img/Usuario.png" alt="" srcset="" class="imagen">
+    </div>
+    
+    <mat-form-field class="formulario">
+      <mat-label >Ingrese Usuario</mat-label>
+      <input matInput>
+    </mat-form-field> 
+  <br>
+    <mat-form-field class="formulario">
+      <mat-label >Ingrese Constraseña</mat-label>
+      <input matInput type="password">
+    </mat-form-field>
+    <br>
+    <a  target="_blank" class="restablecer" (click)="restablecer()">Restablecer Contraseña?</a>
+  
+    <div class="boton">
+      <button mat-flat-button>Iniciar Sesion</button>
+    </div>
+  </body>
+</ion-content>
