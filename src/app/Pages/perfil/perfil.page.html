@@ -1,0 +1,59 @@
+<ion-header>
+  <div class="contenedor-header">
+    <img src="../../../assets/img/Auto.png" alt="" srcset="" class="imagen-header">
+    <h1 class="texto">Perfil</h1>
+  </div>
+</ion-header>
+<ion-content [fullscreen]="true">
+
+  <body>
+
+    <div class="contenedor-imagen">
+      <img src="../../../assets/img/Usuario.png" alt="" srcset="" class="img-perfil">
+      <h1 class="texto-usuario">{{usuario}}</h1>
+    </div>
+    <h1 class="texto-historial">Historial</h1>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Fecha: dd/mm/yyyy hh:mm</ion-card-title>
+        <ion-card-subtitle>Nombre del viaje</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+            </ion-thumbnail>
+            <ion-label>Manuel</ion-label>
+          </ion-item>
+    
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+            </ion-thumbnail>
+            <ion-label>Roberto</ion-label>
+          </ion-item>
+    
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+            </ion-thumbnail>
+            <ion-label>Jose</ion-label>
+          </ion-item>
+    
+          <ion-item lines="none">
+            <ion-thumbnail slot="start">
+              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+            </ion-thumbnail>
+            <ion-label>Luis</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+    
+    <ion-button class="btn-cerrar" (click)="Cerrar()">Cerrar Sesión</ion-button>
+    
+
+  </body>
+</ion-content>

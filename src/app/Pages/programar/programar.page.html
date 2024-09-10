@@ -1,0 +1,31 @@
+<ion-header>
+  <div class="contenedor-header">
+    <img src="../../../assets/img/Auto.png" alt="" srcset="" class="imagen-header">
+    <h1 class="texto">Programar Viaje</h1>
+  </div>
+</ion-header>
+<ion-content [fullscreen]="true">
+
+  <body>
+
+    <ion-list>
+      <ion-list class="lista">  
+        <ion-item>
+          <ion-input label="Costo por persona" type="number" placeholder="000"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input label="Destino" placeholder="Ingresar destino"></ion-input>
+        </ion-item>
+    
+        <mat-form-field class="example-full-width" class="lugar-encuentro">
+          <mat-label>Lugar de encuentro</mat-label>
+          <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+        </mat-form-field>
+    
+      </ion-list>
+    </ion-list>
+
+    <ion-button class="btn-programar">Programar</ion-button>
+
+  </body>
+</ion-content>
