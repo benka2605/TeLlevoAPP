@@ -1,27 +1,52 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+body {
+  background-color: white;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.imagen{
+  width: 30%;
+  margin-top: 40%;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+.contenedor-imagen {
+  margin-left: 40%;
 }
 
-#container a {
+
+.formulario{
+  margin-left: 27%;
+  margin-top: 5%;
+}
+
+.restablecer{
+  margin-left: 35%;
+  padding: 0%;
   text-decoration: none;
+}
+
+.boton{
+  margin-top: 15%;
+  margin-left: 35%;
+}
+
+.imagen-header {
+  width: 16%;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.texto {
+  color: rgb(169, 175, 76);
+  margin-left: 40px;
+}
+
+
+.contenedor-header{
+  background-color: rgb(28, 60, 90);
+  display: flex;
+}
+.footer {
+  background-color: rgb(28, 60, 90);
+  width: 100%;
+  height: 100%;
 }

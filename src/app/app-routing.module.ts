@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'restablecer',
     loadChildren: () => import('./Pages/restablecer/restablecer.module').then( m => m.RestablecerPageModule)
   },
+  {
+    path: '**',
+    loadChildren: () => import('./Pages/p404/p404.module').then( m => m.P404PageModule)
+  },
 ];
 
 @NgModule({

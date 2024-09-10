@@ -8,12 +8,26 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class IntroPage implements OnInit {
 
-  constructor(private navCtrl : NavController) { }
+  public progress = 0;
+  constructor(private navCtrl : NavController) {}
 
   ngOnInit() {
     setTimeout(() => {
       this.navCtrl.navigateForward(['/login'])
-    },4000)
+    },5000)
+
+    setInterval(() => {
+      this.progress += 0.01;
+
+      // Reset the progress bar when it reaches 100%
+      // to continuously show the demo
+      if (this.progress > 1) {
+        setTimeout(() => {
+          this.progress = 0;
+        }, 5000);
+      }
+    }, 50);
+  }
   }
 
-}
+

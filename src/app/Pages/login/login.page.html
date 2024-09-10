@@ -1,5 +1,8 @@
 <ion-header>
-  <app-header></app-header>
+  <div class="contenedor-header">
+    <img src="../../../assets/img/Auto.png" alt="" srcset="" class="imagen-header">
+    <h1 class="texto">Iniciar Sesión</h1>
+  </div>
 </ion-header>
 <ion-content [fullscreen]="true">
 
@@ -10,18 +13,18 @@
     
     <mat-form-field class="formulario">
       <mat-label >Ingrese Usuario</mat-label>
-      <input matInput>
+      <input matInput [(ngModel)]="usuario">
     </mat-form-field> 
   <br>
     <mat-form-field class="formulario">
       <mat-label >Ingrese Constraseña</mat-label>
-      <input matInput type="password">
+      <input [(ngModel)]="password" matInput type="password">
     </mat-form-field>
     <br>
     <a  target="_blank" class="restablecer" (click)="restablecer()">Restablecer Contraseña?</a>
   
     <div class="boton">
-      <button mat-flat-button>Iniciar Sesion</button>
+      <button mat-flat-button (click)="validar()">Iniciar Sesion</button>
     </div>
   </body>
 </ion-content>

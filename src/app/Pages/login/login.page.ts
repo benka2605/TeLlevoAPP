@@ -8,6 +8,9 @@ import { NavController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
+  usuario:string=''
+  password:string=''
+
   constructor(private navCtrl : NavController) { }
 
   ngOnInit() {
@@ -16,6 +19,16 @@ export class LoginPage implements OnInit {
 
   restablecer() {
     this.navCtrl.navigateForward(['/restablecer'])
+  }
+
+  validar() {
+    if (this.usuario == 'Conductor' && this.password == '1234' || this.usuario == 'Pasajero' && this.password == '1234') {
+      localStorage.setItem("usuario",this.usuario)
+      this.navCtrl.navigateForward(['/home'])
+      alert('Bienvenido')
+    } else {
+      alert('Usuario y/o contraseña incorrecta')
+    }
   }
 
 }
