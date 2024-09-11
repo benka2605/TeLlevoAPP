@@ -2,7 +2,9 @@
   <div class="contenedor-header">
     <img src="../../../assets/img/Auto.png" alt="" srcset="" class="imagen-header">
     <h1 class="texto">Perfil</h1>
+    <ion-button id="present-alert">Cerrar sesión</ion-button>
   </div>
+  
 </ion-header>
 <ion-content [fullscreen]="true">
 
@@ -52,8 +54,13 @@
       </ion-card-content>
     </ion-card>
     
-    <ion-button class="btn-cerrar" (click)="Cerrar()">Cerrar Sesión</ion-button>
+    
     
 
+    <ion-alert
+  trigger="present-alert"
+  header="Estas seguro de que quieres cerrar sesión!"
+  [buttons]="alertButtons"
+></ion-alert>
   </body>
 </ion-content>

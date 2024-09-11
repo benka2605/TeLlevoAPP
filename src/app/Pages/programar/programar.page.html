@@ -11,21 +11,22 @@
     <ion-list>
       <ion-list class="lista">  
         <ion-item>
-          <ion-input label="Costo por persona" type="number" placeholder="000"></ion-input>
+          <ion-input label="Costo por persona" type="number" placeholder="000" [(ngModel)]="costo_persona"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input label="Destino" placeholder="Ingresar destino"></ion-input>
+          <ion-input label="Destino" placeholder="Ingresar destino" [(ngModel)]="destino"></ion-input>
         </ion-item>
     
         <mat-form-field class="example-full-width" class="lugar-encuentro">
           <mat-label>Lugar de encuentro</mat-label>
-          <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+          <textarea matInput [(ngModel)]="lugar_encuentro"></textarea>
         </mat-form-field>
     
       </ion-list>
     </ion-list>
 
-    <ion-button class="btn-programar">Programar</ion-button>
+    <ion-button class="btn-programar" (click)="Programar()" id="btn-programar">Programar</ion-button>
+
 
   </body>
 </ion-content>

@@ -15,13 +15,12 @@ export class HomePage implements OnInit {
     this.usuario=localStorage.getItem("usuario") ?? ''
   }
   Programar(){
-    this.navCtrl.navigateForward(['/programar'])
+    this.navCtrl.navigateForward('/programar')
   }
-  Viaje(){
-    this.navCtrl.navigateForward(['/viaje'])
+  Viajes(){
+    this.navCtrl.navigateForward('/viaje')
   }
   Perfil(){
-    this.navCtrl.navigateForward(['/perfil'])
+    this.navCtrl.navigateForward('/perfil')
   }
-
 }

@@ -9,18 +9,20 @@
   <body>
 
     <h1 class="texto-usuario">{{usuario}}</h1>
-    
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Destino</ion-card-title>
-        <ion-card-subtitle>Costo por persona: $5000</ion-card-subtitle>
-      </ion-card-header>
-    
-      <ion-card-content>
-        Lugar de encuentro Fecha: dd/mm/yyyy hh:mm
-      </ion-card-content>
-    </ion-card>
-    <ion-button class="boton-viaje">Tomar viaje</ion-button>
+    <h1 *ngIf="arreglo == undefined" class="txt-viaje">No hay viajes disponibles</h1>
+    <div *ngFor="let viaj of arreglo">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{viaj.destino}}</ion-card-title>
+          <ion-card-subtitle>Costo por persona: ${{viaj.costo_persona}}</ion-card-subtitle>
+        </ion-card-header>
+      
+        <ion-card-content>
+          {{viaj.lugar_encuentro}} Fecha: {{viaj.dia}}/{{viaj.mes}}/{{viaj.anio}} {{viaj.hora}}:{{viaj.minuto}}
+        </ion-card-content>
+      </ion-card>
+      <ion-button class="boton-viaje">Tomar viaje</ion-button>
+    </div>
 
   </body>
 </ion-content>

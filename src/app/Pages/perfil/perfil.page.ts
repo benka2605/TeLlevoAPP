@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 
+
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',
@@ -14,8 +16,21 @@ export class PerfilPage implements OnInit {
   ngOnInit() {
     this.usuario=localStorage.getItem("usuario") ?? ''
   }
-  Cerrar(){
-    this.navCtrl.navigateForward(['/login'])
-  }
+
+  public alertButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+      },
+    },
+    {
+      text: 'OK',
+      role: 'confirm',
+      handler: () => {
+        this.navCtrl.navigateForward(['/login'])
+      },
+    },
+  ];
 
 }
