@@ -11,18 +11,21 @@ export class IntroPage implements OnInit {
   public progress = 0;
   constructor(private navCtrl : NavController) {}
 
-  ngOnInit() {
+  ngOnInit() { 
     
 
     setInterval(() => {
       this.progress += 0.01;
       if (this.progress > 1) {
-        setTimeout(() => {
-          this.progress = 0;
-        }, 5000);
-        this.navCtrl.navigateForward(['/login'])
+        
       }
     }, 50);
+
+    setTimeout(() => {
+      this.progress = 1;
+      this.navCtrl.navigateForward(['/login']) 
+    }, 5000);
+    
   }
   }
 

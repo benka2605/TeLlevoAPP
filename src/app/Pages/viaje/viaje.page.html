@@ -9,20 +9,22 @@
   <body>
 
     <h1 class="texto-usuario">{{usuario}}</h1>
-    <h1 *ngIf="arreglo == undefined" class="txt-viaje">No hay viajes disponibles</h1>
-    <div *ngFor="let viaj of arreglo">
+    <!-- <h1 *ngIf="arreglo == undefined" class="txt-viaje">No hay viajes disponibles</h1> -->
+    <div *ngFor="let viaje of listado_viaje">
       <ion-card>
         <ion-card-header>
-          <ion-card-title>{{viaj.destino}}</ion-card-title>
-          <ion-card-subtitle>Costo por persona: ${{viaj.costo_persona}}</ion-card-subtitle>
+          <ion-card-title>{{viaje.destino}}</ion-card-title>
+          <ion-card-subtitle>Costo por persona: ${{viaje.costo_persona}}</ion-card-subtitle>
+          <ion-card-subtitle>Asientos disponibles: {{viaje.disponibles}}</ion-card-subtitle>
         </ion-card-header>
       
         <ion-card-content>
-          {{viaj.lugar_encuentro}} Fecha: {{viaj.dia}}/{{viaj.mes}}/{{viaj.anio}} {{viaj.hora}}:{{viaj.minuto}}
+          Lugar de encuentro: {{viaje.encuentro}}
         </ion-card-content>
       </ion-card>
-      <ion-button class="boton-viaje">Tomar viaje</ion-button>
+      <ion-button class="boton-viaje" (click)="confirmarModificar(viaje)">Tomar viaje</ion-button>
     </div>
+
 
   </body>
 </ion-content>
