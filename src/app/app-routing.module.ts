@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+
 const routes: Routes = [
   {
     path: 'intro',
@@ -39,6 +40,8 @@ const routes: Routes = [
     path: '**',
     loadChildren: () => import('./Pages/p404/p404.module').then( m => m.P404PageModule)
   },
+
+
 
   
 

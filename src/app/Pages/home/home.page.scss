@@ -7,13 +7,15 @@
 
 .texto {
   color: rgb(169, 175, 76);
-  margin-left: 40px;
+  text-align: center;
 }
 
 
 .contenedor-header{
   background-color: rgb(28, 60, 90);
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .img-programar{
@@ -31,5 +33,40 @@
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+.boton-viajes{
+  width: 90%;
+}
+
+.boton-programar{
+  width: 90%;
+}
+
+.contenedor-viaje{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contenedor-programar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contenedor-his{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btm-historial{
+  --background: trasparent;
+  color: black;
+}
+
+.btn-noti{
+  --background: trasparent;
+  color: black;
 }
 

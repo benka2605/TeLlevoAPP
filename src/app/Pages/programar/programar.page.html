@@ -8,8 +8,8 @@
 
   <body>
 
-    <ion-list>
-      <ion-list class="lista">  
+    
+      <ion-list class="lista">          
         <ion-item>
           <ion-input label="Costo por persona" type="number" placeholder="000" [(ngModel)]="nuevo_viaje.costo_persona"></ion-input>
         </ion-item>
@@ -17,7 +17,10 @@
           <ion-input label="Asientos disponibles" type="number" placeholder="0" [(ngModel)]="nuevo_viaje.disponibles"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input label="Destino" placeholder="Ingresar destino" [(ngModel)]="nuevo_viaje.destino"></ion-input>
+          <ion-input [disabled]="true" label="Destino" placeholder="Ingresar destino" [(ngModel)]="nuevo_viaje.destino"></ion-input>
+          <ion-button slot="end" (click)="abrirMapa()">Seleccionar</ion-button>
+          
+
         </ion-item>
     
         <mat-form-field class="example-full-width" class="lugar-encuentro">
@@ -26,10 +29,10 @@
         </mat-form-field>
     
       </ion-list>
-    </ion-list>
 
     <ion-button class="btn-programar" (click)="Grabar()" id="btn-programar">Programar</ion-button>
 
 
   </body>
+  <app-mapa (destinoSeleccionado)="onDestinoSeleccionado($event)"></app-mapa>
 </ion-content>

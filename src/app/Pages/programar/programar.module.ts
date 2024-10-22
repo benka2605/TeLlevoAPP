@@ -11,6 +11,7 @@ import { ProgramarPage } from './programar.page';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
+import { MapaComponent } from '../../Components/mapa/mapa.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -20,6 +21,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatInputModule,
     MatFormFieldModule
   ],
-  declarations: [ProgramarPage]
+  declarations: [ProgramarPage,MapaComponent]
 })
 export class ProgramarPageModule {}

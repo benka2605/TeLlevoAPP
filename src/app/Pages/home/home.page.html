@@ -1,23 +1,42 @@
 <ion-header>
   <div class="contenedor-header">
-    <img src="../../../assets/img/Auto.png" alt="" srcset="" class="imagen-header">
     <h1 class="texto">Bienvenido {{usuario}}</h1>
   </div>
 </ion-header>
+
+
 <ion-content [fullscreen]="true">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Home</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content id="mapa">
-    <app-mapa [lat]="-33.598272925829164" [lng]="-70.57885144723004"></app-mapa> <!-- Coordenadas de ejemplo -->
-  </ion-content>
+
+  <div class="contenedor-programar">
+    <ion-button class="boton-programar" color="dark" (click)="Programar()">
+      <ion-icon name="alarm-outline" size="large"></ion-icon>
+      Programar Viaje
+    </ion-button>
+  </div>
+
+  <div class="contenedor-viaje">
+    <ion-button class="boton-viajes" color="dark" (click)="Viajes()">
+      <ion-icon name="car-sport-outline" class="icono" size="large"></ion-icon>
+      Viajes Disponibles
+    </ion-button>
+  </div>
+    
+  <div class="contenedor-his">
+    <ion-button class="btm-historial">
+      <ion-icon name="time-outline"></ion-icon>
+      Historial
+    </ion-button>
+
+    <ion-button class="btn-noti">
+      <ion-icon name="notifications-outline"></ion-icon>
+      Notificaciones
+    </ion-button>
+  </div>
+
   
   
 
-    <ion-tabs>
+    <!-- <ion-tabs>
       <ion-tab-bar slot="bottom">
         <ion-tab-button (click)="Programar()">
           <div>
@@ -38,5 +57,5 @@
           Perfil
         </ion-tab-button>
       </ion-tab-bar>
-    </ion-tabs>
+    </ion-tabs> -->
 </ion-content>
