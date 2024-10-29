@@ -1,67 +1,74 @@
 body {
     background-color: white;
+    margin: 0;
+    padding: 0;
 }
 
-.imagen{
+.imagen {
     width: 30%;
-    margin-top: 40%;
+    margin-top: 40vh; /* Ajustado para usar vh */
 }
 
 .contenedor-imagen {
-    margin-left: 40%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Ajustado para usar margin-top en lugar de margin-left */
 }
 
-
-.formulario{
-    margin-left: 27%;
-    margin-top: 5%;
+.formulario {
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh; /* Ajustado para usar vh */
 }
 
-.restablecer{
-    margin-left: 35%;
-    padding: 0%;
+.restablecer {
+    display: flex;
+    justify-content: center;
+    padding: 0;
     text-decoration: none;
 }
 
-.boton{
-    margin-top: 15%;
-    margin-left: 35%;
+.boton {
+    display: flex;
+    justify-content: center;
+    margin-top: 15vh; /* Ajustado para usar vh */
 }
 
 .imagen-header {
     width: 16%;
-    margin-left: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 5px 0 5px 5px;
 }
 
 .texto {
     color: rgb(169, 175, 76);
-    margin-left: 60px;
+    margin-left: 15px; /* Ajustado para reducir el margen */
 }
 
-
-.contenedor-header{
+.contenedor-header {
     background-color: rgb(28, 60, 90);
     display: flex;
+    align-items: center;
+    padding: 10px; /* Añadido padding */
 }
 
-.lista{
-    margin-top: 50%;
+.lista {
+    margin-top: 10vh; /* Ajustado para usar vh */
 }
-.lugar-encuentro{
+
+.lugar-encuentro {
     margin-left: 20%;
-    margin-top: 5%;
+    margin-top: 5vh; /* Ajustado para usar vh */
 }
 
-.btn-programar{
-    margin-top: 50%;
+.btn-programar {
+    margin-top: 50vh; /* Ajustado para usar vh */
     margin-left: 30%;
 }
 
-.boton-viaje{
+.boton-viaje {
     width: 100%;
 }
-.txt-viaje{
+
+.txt-viaje {
     text-align: center;
 }

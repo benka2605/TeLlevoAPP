@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { ModalController } from '@ionic/angular';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
+import { viajes } from 'src/app/Pages/model/viajes';
+import { Viaje } from '../../servicio/crudfirebase.service'
 
 @Component({
   selector: 'app-mapa',
@@ -9,14 +11,20 @@ import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component'
   styleUrls: ['./mapa.component.scss'],
 })
 export class MapaComponent implements OnInit {
+  suggestions: any[] = [];
+
+  showSearchForm: boolean = false;
   map: mapboxgl.Map;
-  marker: mapboxgl.Marker; // Almacenar el único marcador
+  marker: mapboxgl.Marker;
   defaultCoordinates: [number, number] = [-70.57887290490055, -33.598406972538456];
   defaultMarker: mapboxgl.Marker;
-  
-  @Output() destinoSeleccionado = new EventEmitter<string>();
-  
-  private isProcessing = false; // Bandera para controlar la emisión
+  routeLayerId: string = 'routeLayer';
+  savedRoutes: Array<{ start: [number, number], end: [number, number] }> = []; // Arreglo para guardar rutas
+  searchQuery: string = '';
+
+  @Output() Viaje = new EventEmitter<Viaje>();
+
+  private isProcessing = false;
 
   constructor(private modalController: ModalController) {}
 
@@ -38,61 +46,113 @@ export class MapaComponent implements OnInit {
       .addTo(this.map);
 
     this.map.on('click', (event) => {
-      if (this.isProcessing) return; // Prevenir múltiples clics
-      this.isProcessing = true; // Marcar que estamos procesando un clic
+      if (this.isProcessing) return;
+      this.isProcessing = true;
 
       const coords = event.lngLat;
-      this.getNombreDestino(coords.lng, coords.lat); // Obtén el nombre del destino
+      this.getNombreDestino(coords.lng, coords.lat);
     });
+  }
+
+  onSearchInput() {
+    if (this.searchQuery.length > 2 && !this.isProcessing) {
+      this.isProcessing = true;
+      this.searchLocation(this.searchQuery);
+    } else {
+      this.suggestions = []; // Limpiar sugerencias si no hay suficientes caracteres
+    }
+  }
+
+  searchLocation(query: string) {
+    const geocodingUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${(mapboxgl as any).accessToken}`;
+
+    fetch(geocodingUrl)
+      .then((response): Promise<{ features: any[] }> => response.json())
+      .then(data => {
+        if (data.features.length > 0) {
+          this.suggestions = data.features; // Almacenar las sugerencias
+        } else {
+          this.suggestions = []; // Limpiar sugerencias si no se encuentran resultados
+        }
+        this.isProcessing = false; // Permitir nuevas búsquedas
+      })
+      .catch(error => {
+        console.error('Error al buscar la ubicación:', error);
+        this.suggestions = []; // Limpiar sugerencias en caso de error
+        this.isProcessing = false; // Permitir nuevas búsquedas
+      });
+  }
+
+  selectSuggestion(suggestion: any) {
+    const coords = suggestion.geometry.coordinates;
+    this.addMarker(coords[0], coords[1]); // Añadir un marcador en la ubicación seleccionada
+    this.map.flyTo({ center: coords, zoom: 15 }); // Mover el mapa a la ubicación
+    this.getNombreDestino(coords[0], coords[1]); // Obtener el nombre del destino
+    this.suggestions = []; // Limpiar sugerencias
+    this.searchQuery = suggestion.place_name; // Mostrar el nombre seleccionado en el input
   }
 
   addMarker(lng: number, lat: number) {
     if (this.marker) {
-      this.marker.remove(); // Remueve el marcador anterior si existe
+      this.marker.remove();
     }
     this.marker = new mapboxgl.Marker()
       .setLngLat([lng, lat])
       .addTo(this.map);
   }
 
+  
+
   getNombreDestino(lng: number, lat: number) {
     const geocodingUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${(mapboxgl as any).accessToken}`;
     
     fetch(geocodingUrl)
-      .then(response => response.json())
+      .then((response): Promise<{ features: any[] }> => response.json())
       .then(data => {
         if (data.features.length > 0) {
-          const nombreDestino = data.features[0].place_name; // Obtén el nombre del lugar
-          this.addMarker(lng, lat); // Añadir marcador en la ubicación seleccionada
-          this.presentConfirm(nombreDestino); // Abrir modal de confirmación
+          const nombreDestino = data.features[0].place_name;
+          this.addMarker(lng, lat);
+          const geojson = {};
+          this.presentConfirm(nombreDestino, this.defaultCoordinates, [lng, lat], geojson);
+          this.drawRoute(this.defaultCoordinates, [lng, lat]);
         } else {
           alert('No se pudo obtener el nombre de la ubicación.');
-          this.isProcessing = false; // Restablecer al cerrar
+          this.isProcessing = false;
         }
       })
       .catch(error => {
         console.error('Error al obtener el nombre del destino:', error);
         alert('Error al obtener el nombre del destino.');
-        this.isProcessing = false; // Restablecer al cerrar
+        this.isProcessing = false;
       });
   }
 
-  async presentConfirm(destino: string) {
+  async presentConfirm(destino: string, start: [number, number], end: [number, number], geojson: any) {
     const modal = await this.modalController.create({
       component: ConfirmModalComponent,
       componentProps: { destino: destino },
     });
-
+  
     modal.onDidDismiss().then((data) => {
-      this.isProcessing = false; // Restablecer al cerrar
+      this.isProcessing = false;
       if (data.data && data.data.confirmado) {
-        this.destinoSeleccionado.emit(destino); // Emitir nombre
-        this.closeMap(); // Cerrar mapa
+        // Crea un objeto Viaje y emítelo, asegurándote de incluir todos los campos necesarios
+        const viaje: Viaje = {
+          costo_persona: '0',
+          destino: destino,
+          disponibles: 0,
+          encuentro: '',
+          ruta: { start, end, geojson },
+        };
+        this.Viaje.emit(viaje); // Emitimos el objeto viaje
+         // Emitimos el objeto viaje
+        this.closeMap();
       }
     });
-
+  
     return await modal.present();
   }
+  
 
   openMap() {
     const mapContainer = document.getElementById('map');
@@ -100,13 +160,73 @@ export class MapaComponent implements OnInit {
       mapContainer.style.display = 'block';
       this.map.setCenter(this.defaultCoordinates);
       this.map.resize();
+      this.showSearchForm = true;
     }
+  }
+
+  hideSearchForm() {
+    this.showSearchForm = false; // Cambia el estado a falso para ocultar el formulario
   }
 
   closeMap() {
     const mapContainer = document.getElementById('map');
     if (mapContainer) {
-      mapContainer.style.display = 'none'; // Solo oculta el mapa, no lo elimina
+      mapContainer.style.display = 'none';
+      this.showSearchForm = false;
     }
+  }
+
+  drawRoute(start: [number, number], end: [number, number]) {
+    const directionsUrl = `https://api.mapbox.com/directions/v5/mapbox/driving/${start.join(',')};${end.join(',')}?geometries=geojson&access_token=${(mapboxgl as any).accessToken}`;
+    
+    fetch(directionsUrl)
+      .then((response): Promise<{ routes: any[] }> => response.json())
+      .then(data => {
+        if (data.routes && data.routes[0]) {
+          const route = data.routes[0].geometry;
+
+          // Guardar la ruta en el arreglo
+          this.savedRoutes.push({ start, end });
+
+          if (this.map.getLayer(this.routeLayerId)) {
+            this.map.removeLayer(this.routeLayerId);
+            this.map.removeSource(this.routeLayerId);
+          }
+
+          this.map.addLayer({
+            id: this.routeLayerId,
+            type: 'line',
+            source: {
+              type: 'geojson',
+              data: {
+                type: 'Feature',
+                properties: {},
+                geometry: route,
+              },
+            },
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round',
+            },
+            paint: {
+              'line-color': '#3880ff',
+              'line-width': 5,
+            },
+          });
+        } else {
+          throw new Error('No routes found');
+        }
+      })
+      .catch(error => {
+        console.error('Error al obtener la ruta:', error);
+        alert('Error al obtener la ruta.');
+      });
+  }
+
+  // Método para visualizar rutas guardadas
+  visualizeSavedRoutes() {
+    this.savedRoutes.forEach(route => {
+      this.drawRoute(route.start, route.end); // Dibuja cada ruta guardada
+    });
   }
 }

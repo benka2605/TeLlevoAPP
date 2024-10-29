@@ -1,2 +1,10 @@
+<div *ngIf="showSearchForm" style="position: relative; z-index: 10; background: white; padding: 10px; border-radius: 5px;">
+    <input type="text" [(ngModel)]="searchQuery" (input)="onSearchInput()" placeholder="Buscar ubicación..." />
+    <ul *ngIf="suggestions.length > 0">
+      <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+        {{ suggestion.place_name }}
+      </li>
+    </ul>
+  </div>
 <div id="map" style="width: 100%; height: 400px; display: none;"></div>
 

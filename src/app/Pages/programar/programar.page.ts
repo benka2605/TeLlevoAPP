@@ -19,14 +19,27 @@ export class ProgramarPage implements OnInit {
     private CrudServ: CrudfirebaseService
   ) {}
 
-  nuevo_viaje: Viaje = { costo_persona: '', destino: '', disponibles: 0, encuentro: '' };
+  nuevo_viaje: Viaje = { 
+    costo_persona: '', 
+    destino: '', 
+    disponibles: 0, 
+    encuentro: '', 
+    ruta: { 
+      start: [0, 0], 
+      end: [0, 0], 
+      geojson: {}
+    }
+  };
 
   ngOnInit() {}
 
-  async onDestinoSeleccionado(destino: string) {
+  async onDestinoSeleccionado({ destino, ruta }: { destino: string, ruta: { start: [number, number], end: [number, number], geojson: any } }) {
     this.nuevo_viaje.destino = destino; // Guarda el nombre del destino en el modelo
+    this.nuevo_viaje.ruta = ruta; // Guarda la ruta en el modelo
     this.mapComponent.closeMap(); // Cierra el mapa
   }
+  
+  
 
   async Grabar() {
     this.CrudServ.crearViaje(this.nuevo_viaje).then(async () => {
@@ -43,6 +56,8 @@ export class ProgramarPage implements OnInit {
       alert('Error al crear el viaje');
     });
   }
+
+  
 
   abrirMapa() {
     this.mapComponent.openMap(); // Llama al método para abrir el mapa

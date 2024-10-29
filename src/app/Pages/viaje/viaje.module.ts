@@ -8,12 +8,15 @@ import { ViajePageRoutingModule } from './viaje-routing.module';
 
 import { ViajePage } from './viaje.page';
 
+import { MapaModule } from 'src/app/Components/mapa/mapa.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ViajePageRoutingModule
+    ViajePageRoutingModule,
+    MapaModule,
   ],
   declarations: [ViajePage]
 })

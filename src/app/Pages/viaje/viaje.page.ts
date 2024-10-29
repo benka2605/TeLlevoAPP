@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+
+import { MapaComponent } from 'src/app/Components/mapa/mapa.component';
 
 import { CrudfirebaseService, Viaje } from 'src/app/servicio/crudfirebase.service';
 @Component({
@@ -8,6 +10,7 @@ import { CrudfirebaseService, Viaje } from 'src/app/servicio/crudfirebase.servic
   styleUrls: ['./viaje.page.scss'],
 })
 export class ViajePage implements OnInit {
+  @ViewChild(MapaComponent) mapComponent: MapaComponent;
 
   usuario:string=''
 
@@ -18,7 +21,13 @@ export class ViajePage implements OnInit {
 
   // listado_viaje:Viaje[]=[]
   listado_viaje: (Viaje & { id: string })[] = [];
-  viaje_mod:Viaje= {costo_persona:'',destino:'',disponibles:0,encuentro:''} 
+  viaje_mod: Viaje = {
+    costo_persona: '',
+    destino: '',
+    disponibles: 0,
+    encuentro: '',
+    ruta: { start: [0, 0], end: [1, 1], geojson: null } // Agrega esto
+  };
 
   ngOnInit() {
     this.usuario=localStorage.getItem("usuario") ?? ''
@@ -68,9 +77,20 @@ export class ViajePage implements OnInit {
       }).catch(error => {
         console.error('Error al modificar el viaje: ', error);
       });
-    } else {
+    } 
+    if (viaje.disponibles === 1 ) {
+      this.CrudServ.eliminarViaje(viaje.id)
+    }
+    else {
       console.warn('No hay asientos disponibles para reducir.');
     }
   }
+
+  verViaje(viaje: Viaje & { id: string }) {
+    this.mapComponent.openMap(); // Abre el mapa
+    this.mapComponent.drawRoute(viaje.ruta.start, viaje.ruta.end); // Dibuja la ruta
+    this.mapComponent.hideSearchForm();
+  }
+  
 
 }

@@ -25,6 +25,10 @@ export class CrudfirebaseService {
     const nuevosDisponibles = viaje.disponibles - 1;
     return this.firestore.collection('viaje').doc(id).update({ ...viaje, disponibles: nuevosDisponibles });
   }
+
+  eliminarViaje(id:any){ 
+    return this.firestore.collection('viaje').doc(id).delete();
+  }
 }
 
 
@@ -33,4 +37,9 @@ export interface Viaje{
   destino:string;
   disponibles:number;
   encuentro:string;
+  ruta:{
+    start : [number,number];
+    end: [number,number];
+    geojson:any;
+  }
 }

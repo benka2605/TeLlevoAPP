@@ -11,7 +11,7 @@ import { ProgramarPage } from './programar.page';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
-import { MapaComponent } from '../../Components/mapa/mapa.component';
+import { MapaModule } from 'src/app/Components/mapa/mapa.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,8 +19,9 @@ import { MapaComponent } from '../../Components/mapa/mapa.component';
     IonicModule,
     ProgramarPageRoutingModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MapaModule,
   ],
-  declarations: [ProgramarPage,MapaComponent]
+  declarations: [ProgramarPage]
 })
 export class ProgramarPageModule {}
