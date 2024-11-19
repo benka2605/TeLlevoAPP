@@ -6,56 +6,33 @@
 
 
 <ion-content [fullscreen]="true">
-
-  <div class="contenedor-programar">
-    <ion-button class="boton-programar" color="dark" (click)="Programar()">
-      <ion-icon name="alarm-outline" size="large"></ion-icon>
-      Programar Viaje
-    </ion-button>
-  </div>
-
-  <div class="contenedor-viaje">
-    <ion-button class="boton-viajes" color="dark" (click)="Viajes()">
-      <ion-icon name="car-sport-outline" class="icono" size="large"></ion-icon>
-      Viajes Disponibles
-    </ion-button>
-  </div>
+  
+    <div class="cuerpo">
+      <div class="contenedor-programar" *ngIf="usuario_rol ==='conductor'">
+        <ion-button class="boton-programar" color="dark" (click)="Programar()">
+          <ion-icon name="alarm-outline" size="large"></ion-icon>
+          Programar Viaje
+        </ion-button>
+      </div>
     
-  <div class="contenedor-his">
-    <ion-button class="btm-historial" (click)="Perfil()">
-      <ion-icon name="time-outline"></ion-icon>
-      Historial
-    </ion-button>
-
-    <ion-button class="btn-noti">
-      <ion-icon name="notifications-outline"></ion-icon>
-      Notificaciones
-    </ion-button>
-  </div>
-
+      <div *ngIf="usuario_rol === 'pasajero'" class="contenedor-viaje">
+        <ion-button class="boton-viajes" (click)="Viajes()">
+          <ion-icon name="car-sport-outline" class="icono" size="large"></ion-icon>
+          Viajes Disponibles
+        </ion-button>
+      </div>
+        
+      <div class="contenedor-his">
+        <ion-button class="btm-historial" (click)="Perfil()">
+          <ion-icon name="time-outline"></ion-icon>
+          Historial
+        </ion-button>
+    
+        <ion-button class="btn-noti">
+          <ion-icon name="notifications-outline"></ion-icon>
+          Notificaciones
+        </ion-button>
+      </div>
+    </div>
   
-  
-
-    <!-- <ion-tabs>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button (click)="Programar()">
-          <div>
-            <img src="../../../assets/img/Programar_Viaje.png" alt="" srcset="" class="img-programar">
-          </div>
-          Programar viaje
-        </ion-tab-button>
-        <ion-tab-button (click)="Viajes()">
-          <div>
-            <img src="../../../assets/img/Viaje_disponibles.png" alt="" srcset="" class="img-viaje">
-          </div>
-          Viajes disponibles
-        </ion-tab-button>
-        <ion-tab-button (click)="Perfil()">
-          <div>
-            <img src="../../../assets/img/Usuario.png" alt="" srcset="" class="img-perfil">
-          </div>
-          Perfil
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs> -->
 </ion-content>

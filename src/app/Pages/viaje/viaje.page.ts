@@ -26,7 +26,9 @@ export class ViajePage implements OnInit {
     destino: '',
     disponibles: 0,
     encuentro: '',
-    ruta: { start: [0, 0], end: [1, 1], geojson: null } // Agrega esto
+    ruta: { start: [0, 0], end: [1, 1], geojson: null },
+    usuario:'',
+    uid:''
   };
 
   ngOnInit() {

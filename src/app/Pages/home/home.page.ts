@@ -1,5 +1,7 @@
 import { Component,OnInit} from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { AuthService } from '../../servicio/auth.service'
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-home',
@@ -7,12 +9,24 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  usuario:string|null='';
+  usuario_rol:string|null='';
 
-  usuario:string=''
-  constructor(private navCtrl : NavController) {}
+  constructor(private navCtrl : NavController,private authService:AuthService,private firestore:AngularFirestore) {}
 
   ngOnInit(): void {
-    this.usuario=localStorage.getItem("usuario") ?? ''
+    this.authService.getAuthState().subscribe(user => {
+      if(user) {
+        this.usuario = user.displayName;
+        this.firestore.collection('users').doc(user.uid).valueChanges().subscribe((userData: any) => {
+          if (userData && userData.rol) {
+            this.usuario_rol = userData.rol;
+          } else {
+            console.error('No tiene rol')
+          }
+        })
+      }
+    })
   }
   Programar(){
     this.navCtrl.navigateForward('/programar')

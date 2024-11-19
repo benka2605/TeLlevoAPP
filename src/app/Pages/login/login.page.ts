@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { AuthService } from '../../servicio/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,10 +10,10 @@ import { AlertController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  usuario:string=''
-  password:string=''
+  email:string = '';
+  password:string = '';
 
-  constructor(private navCtrl : NavController, private alertController:AlertController) { }
+  constructor(private navCtrl : NavController, private alertController:AlertController,private authService: AuthService) { }
 
   ngOnInit() {
     
@@ -22,23 +23,20 @@ export class LoginPage implements OnInit {
     this.navCtrl.navigateForward(['/restablecer'])
   }
 
-  async validar() {
-    if (this.usuario == 'Conductor' && this.password == '1234' || this.usuario == 'Pasajero' && this.password == '1234') {
-      localStorage.setItem("usuario",this.usuario)
-      const alert = await this.alertController.create({
-        message: 'Sesion iniciada correctamente.',
-        buttons: ['OK']
-      });
-      await alert.present();
-      this.navCtrl.navigateForward(['/home'])
-    } else {
-      const alert = await this.alertController.create({
-        header: 'ERROR',
-        message: 'Usuario y/o contraseña incorrecta',
-        buttons: ['OK']
-      });
-      await alert.present();
-    }
+  login(){
+    this.authService.login(this.email,this.password).then(()=>{
+      this.navCtrl.navigateForward('/home');
+    }).catch(error => {
+      console.error('Error de inicio de sesión',error);
+    });
+  }
+
+  recuperar(){
+    this.navCtrl.navigateForward('/restablecer')
+  }
+
+  regresar(){
+    this.navCtrl.navigateForward('/inicio-opcion')
   }
 
 }

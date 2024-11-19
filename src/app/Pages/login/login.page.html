@@ -1,6 +1,6 @@
 <ion-header>
   <div class="contenedor-header">
-    <img src="../../../assets/img/Auto.png" alt="" srcset="" class="imagen-header">
+    <img src="../../../assets/img/Auto.png" alt="" srcset="" class="imagen-header" (click)="regresar()">
     <h1 class="texto">Iniciar Sesión</h1>
   </div>
 </ion-header>
@@ -11,20 +11,15 @@
       <img src="../../../assets/img/Usuario.png" alt="" srcset="" class="imagen">
     </div>
     
-    <mat-form-field class="formulario">
-      <mat-label >Ingrese Usuario</mat-label>
-      <input matInput [(ngModel)]="usuario">
-    </mat-form-field> 
-  <br>
-    <mat-form-field class="formulario">
-      <mat-label >Ingrese Constraseña</mat-label>
-      <input [(ngModel)]="password" matInput type="password">
-    </mat-form-field>
-    <br>
-    <a  target="_blank" class="restablecer" (click)="restablecer()">Restablecer Contraseña?</a>
-  
-    <div class="boton">
-      <button mat-flat-button (click)="validar()">Iniciar Sesion</button>
-    </div>
+    <form (submit)="login()">
+      <ion-item>
+        <ion-label position="floating">Email</ion-label><ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label> <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
+      </ion-item>
+      <ion-button expand="full" type="submit">Iniciar Sesión</ion-button>
+      <h4 class="restablecer" (click)="recuperar()">Restablecer contraseña?</h4>
+    </form>
   </body>
 </ion-content>

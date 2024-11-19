@@ -37,9 +37,19 @@ const routes: Routes = [
     loadChildren: () => import('./Pages/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
   {
+    path: 'inicio-opcion',
+    loadChildren: () => import('./Pages/inicio-opcion/inicio-opcion.module').then( m => m.InicioOpcionPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./Pages/register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./Pages/p404/p404.module').then( m => m.P404PageModule)
   },
+
+
 
 
 

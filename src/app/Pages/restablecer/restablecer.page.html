@@ -1,6 +1,6 @@
 <ion-header>
   <div class="contenedor-header">
-    <img src="../../../assets/img/Auto.png" alt="" srcset="" class="imagen-header">
+    <img src="../../../assets/img/Auto.png" alt="" srcset="" class="imagen-header" (click)="regresar()">
     <h1 class="texto">Recuperar</h1>
   </div>
 </ion-header>
@@ -12,12 +12,19 @@
     </div>
     
     <mat-form-field class="formulario">
-      <mat-label >Ingrese Usuario</mat-label>
-      <input matInput>
+      <mat-label >Ingrese Correo</mat-label>
+      <input matInput [(ngModel)]="email">
     </mat-form-field> 
   <br>
     <div class="boton">
-      <button mat-flat-button>Recuperar</button>
+      <button mat-flat-button (click)="recuperar()" id="present-alert">Recuperar</button>
     </div>
   </body>
 </ion-content>
+
+<ion-alert
+  trigger="present-alert"
+  header="Correo enviado (Si existe)"
+  [buttons]="alertButtons"
+  (didDismiss)="setResult($event)"
+></ion-alert>

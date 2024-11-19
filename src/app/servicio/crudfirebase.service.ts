@@ -42,4 +42,6 @@ export interface Viaje{
     end: [number,number];
     geojson:any;
   }
+  usuario:string;
+  uid:string;
 }

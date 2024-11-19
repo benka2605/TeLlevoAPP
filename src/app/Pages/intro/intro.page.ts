@@ -23,7 +23,7 @@ export class IntroPage implements OnInit {
 
     setTimeout(() => {
       this.progress = 1;
-      this.navCtrl.navigateForward(['/login']) 
+      this.navCtrl.navigateForward(['/inicio-opcion']) 
     }, 5000);
     
   }

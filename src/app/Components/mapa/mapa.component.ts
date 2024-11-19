@@ -5,6 +5,8 @@ import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component'
 import { viajes } from 'src/app/Pages/model/viajes';
 import { Viaje } from '../../servicio/crudfirebase.service'
 
+import { AuthService } from '../../servicio/auth.service';
+
 @Component({
   selector: 'app-mapa',
   templateUrl: './mapa.component.html',
@@ -14,6 +16,7 @@ export class MapaComponent implements OnInit {
   suggestions: any[] = [];
 
   showSearchForm: boolean = false;
+  showBtn:boolean = false;
   map: mapboxgl.Map;
   marker: mapboxgl.Marker;
   defaultCoordinates: [number, number] = [-70.57887290490055, -33.598406972538456];
@@ -26,10 +29,17 @@ export class MapaComponent implements OnInit {
 
   private isProcessing = false;
 
-  constructor(private modalController: ModalController) {}
+  usuario:string|null='';
+
+  constructor(private modalController: ModalController,private authService:AuthService) {}
 
   ngOnInit(): void {
     this.initializeMap(this.defaultCoordinates);
+    this.authService.getAuthState().subscribe(user => {
+      if (user) {
+        this.usuario = user.displayName;
+      }
+    });
   }
 
   initializeMap(coordinates: [number, number]) {
@@ -113,7 +123,9 @@ export class MapaComponent implements OnInit {
           const nombreDestino = data.features[0].place_name;
           this.addMarker(lng, lat);
           const geojson = {};
-          this.presentConfirm(nombreDestino, this.defaultCoordinates, [lng, lat], geojson);
+          setTimeout(() => {
+            this.presentConfirm(nombreDestino, this.defaultCoordinates, [lng, lat], geojson);
+          }, 3000);
           this.drawRoute(this.defaultCoordinates, [lng, lat]);
         } else {
           alert('No se pudo obtener el nombre de la ubicación.');
@@ -143,16 +155,18 @@ export class MapaComponent implements OnInit {
           disponibles: 0,
           encuentro: '',
           ruta: { start, end, geojson },
+          usuario:this.usuario || 'Usuario Anónimo',
+          uid:''
         };
         this.Viaje.emit(viaje); // Emitimos el objeto viaje
          // Emitimos el objeto viaje
-        this.closeMap();
       }
     });
   
     return await modal.present();
   }
   
+
 
   openMap() {
     const mapContainer = document.getElementById('map');
@@ -161,6 +175,7 @@ export class MapaComponent implements OnInit {
       this.map.setCenter(this.defaultCoordinates);
       this.map.resize();
       this.showSearchForm = true;
+      this.showBtn = true;
     }
   }
 
@@ -173,6 +188,7 @@ export class MapaComponent implements OnInit {
     if (mapContainer) {
       mapContainer.style.display = 'none';
       this.showSearchForm = false;
+      this.showBtn = false;
     }
   }
 
