@@ -20,6 +20,8 @@ import { MapaModule } from './Components/mapa/mapa.module';
 
 import { FormsModule } from '@angular/forms';
 
+import { getFirestore } from 'firebase/firestore';
+
 
 @NgModule({
   declarations: [AppComponent],

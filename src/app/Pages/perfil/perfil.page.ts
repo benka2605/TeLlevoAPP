@@ -5,6 +5,7 @@ import { CrudfirebaseService,Viaje } from 'src/app/servicio/crudfirebase.service
 
 
 
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',

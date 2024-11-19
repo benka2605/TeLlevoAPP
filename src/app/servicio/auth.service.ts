@@ -6,7 +6,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   providedIn: 'root'
 })
 export class AuthService {
-
   constructor(private afAuth: AngularFireAuth,private firestore:AngularFirestore) { }
 
   login(email: string, password: string) { 
