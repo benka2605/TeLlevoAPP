@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  auth = getAuth()
   constructor(private afAuth: AngularFireAuth,private firestore:AngularFirestore) { }
 
-  login(email: string, password: string) { 
-    return this.afAuth.signInWithEmailAndPassword(email, password); 
+  login(email: string, password: string){
+    return this.afAuth.signInWithEmailAndPassword(email,password)
   }
 
   logout() {
@@ -30,8 +33,13 @@ export class AuthService {
     });
   }
 
-  getAuthState() {
-    return this.afAuth.authState; 
+  isAuthenticated():boolean {
+    const user = this.afAuth.authState;
+    return user !== null;
+  }
+
+  getAuthState(){
+    return this.afAuth.authState;
   }
 
   resetPassword(email:string){

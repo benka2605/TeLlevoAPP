@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./Pages/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./Pages/home/home.module').then( m => m.HomePageModule),
+    canActivate:[AuthGuard]
   },
   {
     path: 'login',
@@ -26,19 +28,18 @@ const routes: Routes = [
   },
   {
     path: 'programar',
-    loadChildren: () => import('./Pages/programar/programar.module').then( m => m.ProgramarPageModule)
+    loadChildren: () => import('./Pages/programar/programar.module').then( m => m.ProgramarPageModule),
+    canActivate:[AuthGuard]
   },
   {
     path: 'viaje',
-    loadChildren: () => import('./Pages/viaje/viaje.module').then( m => m.ViajePageModule)
+    loadChildren: () => import('./Pages/viaje/viaje.module').then( m => m.ViajePageModule),
+    canActivate:[AuthGuard]
   },
   {
     path: 'perfil',
-    loadChildren: () => import('./Pages/perfil/perfil.module').then( m => m.PerfilPageModule)
-  },
-  {
-    path: 'inicio-opcion',
-    loadChildren: () => import('./Pages/inicio-opcion/inicio-opcion.module').then( m => m.InicioOpcionPageModule)
+    loadChildren: () => import('./Pages/perfil/perfil.module').then( m => m.PerfilPageModule),
+    canActivate:[AuthGuard]
   },
   {
     path: 'register',

@@ -24,19 +24,48 @@ export class LoginPage implements OnInit {
   }
 
   login(){
-    this.authService.login(this.email,this.password).then(()=>{
-      this.navCtrl.navigateForward('/home');
-    }).catch(error => {
-      console.error('Error de inicio de sesión',error);
-    });
+    if (this.email.trim()==='' || this.password.trim()==='') {
+      this.modalValidar()
+    } else {
+      this.authService.login(this.email,this.password).then(()=>{
+        this.presentAlert();
+        this.limpiarCampos();
+        this.navCtrl.navigateForward('/home')
+      }).catch((error)=>{
+        this.modalValidar()
+      })
+    }
   }
 
   recuperar(){
     this.navCtrl.navigateForward('/restablecer')
   }
 
-  regresar(){
-    this.navCtrl.navigateForward('/inicio-opcion')
+  registrar(){
+    this.navCtrl.navigateForward("/register()")
+  }
+
+  limpiarCampos(){
+    this.email= '';
+    this.password= '';
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Se a iniciado sesión correctamente',
+      buttons: ['Ok'],
+    });
+
+    await alert.present();
+  }
+
+  async modalValidar() {
+    const alert = await this.alertController.create({
+      header: 'Correo y/o contraseña estan incorrectos',
+      buttons: ['Ok'],
+    });
+
+    await alert.present();
   }
 
 }

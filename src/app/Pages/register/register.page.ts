@@ -15,6 +15,7 @@ export class RegisterPage implements OnInit {
   password:string='';
   usuario:string='';
   rol:string='pasajero';
+  user = this.fireservice.listarUsuarios(this.usuario,this.email)
 
   constructor(private navCtrl:NavController,
     private authService: AuthService,
@@ -25,24 +26,46 @@ export class RegisterPage implements OnInit {
   }
 
   async register(){
-    if (await this.fireservice.listarUsuarios(this.usuario)) {
-      this.presentAlert()
-    } else {
-      this.authService.register(this.email,this.password,this.usuario,this.rol).then(() => {
-        this.navCtrl.navigateForward('/login').catch(error => {
-          console.error('Error de registro',error)
-        })
-      })
+    try {
+      if (this.usuario === await this.user) {
+        await this.presentAlert()
+      } else {
+        await this.authService.register(this.email,this.password,this.usuario,this.rol)
+          this.limpiar()
+        await this.navCtrl.navigateForward('/login')
+          
+        }
+    }
+    catch (error){
+      this.presentAlertError(error)
+    }
+    
+
+  
+    }
+    async presentAlert() {
+      const alert = await this.alertController.create({
+        header: 'El nombre de usuario ya existe',
+        buttons: ['Action'],
+      });
+  
+      await alert.present();
+    }
+  
+    async presentAlertError(error:any) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: error.message || 'Se produjo un error inesperado',
+        buttons: ['Ok'],
+      });
+  
+      await alert.present();
+    }
+  
+    limpiar(){
+      this.email='';
+      this.password='';
+      this.usuario='';
+      this.rol='pasajero';
     }
   }
-
-  async presentAlert() {
-    const alert = await this.alertController.create({
-      header: 'El nombre de usuario ya existe',
-      buttons: ['Action'],
-    });
-
-    await alert.present();
-  }
-
-}

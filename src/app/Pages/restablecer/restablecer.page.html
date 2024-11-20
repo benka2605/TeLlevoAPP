@@ -5,21 +5,17 @@
   </div>
 </ion-header>
 <ion-content [fullscreen]="true">
-
-  <body>
-    <div class="contenedor-imagen">
-      <img src="../../../assets/img/Usuario.png" alt="" srcset="" class="imagen">
+<div class="container">
+<div class="card">
+    <span class="card__title">Restablecer</span>
+    <p class="card__content">Si el correo existe se le enviara un correo de recuperacion.
+    </p>
+    <div class="card__form">
+        <input placeholder="Ingrese correo" type="email" [(ngModel)]="email">
+        <button class="sign-up" (click)="recuperar()" id="present-alert">Recuperar</button>
     </div>
-    
-    <mat-form-field class="formulario">
-      <mat-label >Ingrese Correo</mat-label>
-      <input matInput [(ngModel)]="email">
-    </mat-form-field> 
-  <br>
-    <div class="boton">
-      <button mat-flat-button (click)="recuperar()" id="present-alert">Recuperar</button>
-    </div>
-  </body>
+</div>
+</div>
 </ion-content>
 
 <ion-alert

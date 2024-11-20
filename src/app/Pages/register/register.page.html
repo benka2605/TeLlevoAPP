@@ -6,25 +6,23 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="cuerpo">
-    <form (submit)="register()">
-      <ion-item>
-        <ion-label position="floating">Nombre de Usuario</ion-label>
-          <ion-input [(ngModel)]="usuario" name="displayName" type="text" required></ion-input> 
-      </ion-item> 
-      <ion-item> 
-        <ion-label position="floating">Email</ion-label> <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input> 
-      </ion-item> 
-      <ion-item> <ion-label position="floating">Contraseña</ion-label> <ion-input [(ngModel)]="password" name="password" type="password" required></ion-input>
-      </ion-item> 
+<div class="container">
+  <form class="form" (sumbit)="register()">
+      <span class="title">Registrarse</span>
+      <label for="username" class="label">Nombre de usuario</label>
+      <input type="text" id="username" name="username" required class="input" [(ngModel)]="usuario">
+      <label for="email" class="label">Correo</label>
+      <input type="email" id="email" name="email" required class="input" [(ngModel)]="email">
+      <label for="password" class="label">Contraseña</label>
+      <input type="password" id="password" name="password" required class="input" [(ngModel)]="password">
       <ion-item>
         <ion-label position="floating">Rol</ion-label>
-        <ion-select [(ngModel)]="rol" name="rol" interface="popover">
-          <ion-select-option value="conductor">Conductor</ion-select-option>
-          <ion-select-option value="pasajero">Pasajero</ion-select-option>
-        </ion-select>
+      <ion-select [(ngModel)]="rol" name="rol" interface="popover">
+        <ion-select-option value="conductor">Conductor</ion-select-option>
+        <ion-select-option value="pasajero">Pasajero</ion-select-option>
+      </ion-select>
       </ion-item>
-      <ion-button expand="full" type="submit">Registrarse</ion-button>
+      <button type="submit" class="submit" (click)="register()">Register</button>
     </form>
-  </div>
+</div>
 </ion-content>

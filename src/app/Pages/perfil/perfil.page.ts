@@ -38,7 +38,7 @@ export class PerfilPage implements OnInit {
       role: 'confirm',
       handler: () => {
         this.authService.logout().then(() => {
-          this.navCtrl.navigateForward(['/inicio-opcion']);
+          this.navCtrl.navigateForward(['/login']);
         });
       },
     },

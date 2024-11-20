@@ -29,15 +29,15 @@ export class FireService {
 
   constructor() { }
 
-  async listarUsuarios(usuario:string):Promise<boolean>{
+  async listarUsuarios(usuario:string,correo:string):Promise<string>{
     const q = query(collection(db, "users"));
 
     const querySnapshot = await getDocs(q);
     for (const doc of querySnapshot.docs) {
-      if (usuario = doc.data()["usuario"]){
-        return true
+      if (usuario = doc.data()["usuario"] || correo === doc.data()['email']) {
+        return doc.data()["usuario"]
       }
     }
-    return false
+    return ''
   }
 }
