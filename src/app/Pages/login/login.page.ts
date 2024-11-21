@@ -45,6 +45,9 @@ export class LoginPage implements OnInit {
       })
     }
   }
+  loginGoogle(){
+    this.authService.loginGoogle();
+  }
 
   recuperar(){
     this.navCtrl.navigateForward('/restablecer')

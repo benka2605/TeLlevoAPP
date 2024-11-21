@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence, browserLocalPersistence } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signOut, signInWithPopup, signInWithEmailAndPassword, setPersistence, browserSessionPersistence, browserLocalPersistence, onAuthStateChanged } from "firebase/auth";
 
 
 
@@ -10,20 +11,37 @@ import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPers
 })
 export class AuthService {
   private auth = getAuth()
+  private provider = new GoogleAuthProvider()
   constructor(private afAuth: AngularFireAuth,private firestore:AngularFirestore) { }
 
   login(email: string, password: string,remember:boolean):Promise<any>{
-    const persistence = remember ? browserLocalPersistence : browserSessionPersistence;
-      return setPersistence(this.auth,persistence).then(()=>{
-      return signInWithEmailAndPassword(this.auth,email,password).then((userCredential)=>{
-        const user = userCredential.user; 
-        return user;
+    if (remember){
+      return setPersistence(this.auth,browserLocalPersistence).then(()=>{
+        return signInWithEmailAndPassword(this.auth,email,password).then((userCrendential)=>{
+          const user = userCrendential.user;
+          return user;
+        })
       })
+    } else {
+      return setPersistence(this.auth,browserSessionPersistence).then(()=>{
+        return signInWithEmailAndPassword(this.auth,email,password).then((userCredential)=>{
+          const user = userCredential.user;
+          return user
+        })
+      })
+    }
+  }
+
+  loginGoogle(){
+    return signInWithPopup(this.auth,this.provider).then((result)=>{
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      const user = result.user;
     })
   }
 
   logout() {
-    return this.afAuth.signOut(); 
+    return signOut(this.auth)
   }
 
   register(email: string, password: string, usuario:string,rol:string) {
@@ -47,6 +65,16 @@ export class AuthService {
 
   getAuthState(){
     return this.afAuth.authState;
+  }
+
+  estado(){
+    return onAuthStateChanged(this.auth,((user)=>{
+      if(user){
+        return console.log('si')
+      } else {
+        return console.log('no')
+      }
+    }))
   }
 
   resetPassword(email:string){

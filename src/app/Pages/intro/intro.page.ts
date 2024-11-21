@@ -10,6 +10,7 @@ export class IntroPage implements OnInit {
   constructor(private navCtrl : NavController, private authService:AuthService) {}
 
   ngOnInit() {
+    this.authService.estado()
   }
 
   seguir(){
