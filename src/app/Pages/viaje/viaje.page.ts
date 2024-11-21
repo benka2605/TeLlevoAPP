@@ -89,7 +89,7 @@ export class ViajePage implements OnInit {
   }
 
   verViaje(viaje: Viaje & { id: string }) {
-    this.mapComponent.openMap(); // Abre el mapa
+    this.mapComponent.openMap();
     this.mapComponent.drawRoute(viaje.ruta.start, viaje.ruta.end); // Dibuja la ruta
     this.mapComponent.hideSearchForm();
   }

@@ -1,18 +1,25 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence, browserLocalPersistence } from "firebase/auth";
+
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  auth = getAuth()
+  private auth = getAuth()
   constructor(private afAuth: AngularFireAuth,private firestore:AngularFirestore) { }
 
-  login(email: string, password: string){
-    return this.afAuth.signInWithEmailAndPassword(email,password)
+  login(email: string, password: string,remember:boolean):Promise<any>{
+    const persistence = remember ? browserLocalPersistence : browserSessionPersistence;
+      return setPersistence(this.auth,persistence).then(()=>{
+      return signInWithEmailAndPassword(this.auth,email,password).then((userCredential)=>{
+        const user = userCredential.user; 
+        return user;
+      })
+    })
   }
 
   logout() {
@@ -54,3 +61,7 @@ export class AuthService {
 
   
 }
+function then(arg0: () => any) {
+  throw new Error('Function not implemented.');
+}
+

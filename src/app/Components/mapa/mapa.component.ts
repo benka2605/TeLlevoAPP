@@ -24,12 +24,14 @@ export class MapaComponent implements OnInit {
   routeLayerId: string = 'routeLayer';
   savedRoutes: Array<{ start: [number, number], end: [number, number] }> = []; // Arreglo para guardar rutas
   searchQuery: string = '';
+  
 
   @Output() Viaje = new EventEmitter<Viaje>();
 
   private isProcessing = false;
 
   usuario:string|null='';
+  allowRouteCreation: boolean;
 
   constructor(private modalController: ModalController,private authService:AuthService) {}
 
@@ -41,6 +43,7 @@ export class MapaComponent implements OnInit {
       }
     });
   }
+  
 
   initializeMap(coordinates: [number, number]) {
     (mapboxgl as any).accessToken = 'pk.eyJ1IjoidG9teTMwMDAiLCJhIjoiY20yY29xaXVoMGoxYTJscHpkMmQ2M3R0cCJ9.28SM7i7STdT6iz-sEsghZg';
@@ -50,7 +53,7 @@ export class MapaComponent implements OnInit {
       center: coordinates,
       zoom: 15,
     });
-
+    
     this.defaultMarker = new mapboxgl.Marker({ color: 'red' })
       .setLngLat(coordinates)
       .addTo(this.map);
@@ -178,7 +181,7 @@ export class MapaComponent implements OnInit {
       this.showBtn = true;
     }
   }
-
+  
   hideSearchForm() {
     this.showSearchForm = false; // Cambia el estado a falso para ocultar el formulario
   }
