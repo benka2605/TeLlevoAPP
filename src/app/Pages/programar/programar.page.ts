@@ -59,7 +59,6 @@ export class ProgramarPage implements OnInit {
   async Grabar() {
     if (this.nombre_usuario && this.uid_usuario) {
       this.nuevo_viaje.usuario = this.nombre_usuario;
-      this.nuevo_viaje.uid = this.uid_usuario;
     } else {
       this.nuevo_viaje.usuario = 'Usuario Anónimo';
     }

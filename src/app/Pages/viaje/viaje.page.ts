@@ -1,22 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-
-import { MapaComponent } from 'src/app/Components/mapa/mapa.component';
-
 import { CrudfirebaseService, Viaje } from 'src/app/servicio/crudfirebase.service';
+import { MapComponent } from 'src/app/Components/map/map.component';
 @Component({
   selector: 'app-viaje',
   templateUrl: './viaje.page.html',
   styleUrls: ['./viaje.page.scss'],
 })
 export class ViajePage implements OnInit {
-  @ViewChild(MapaComponent) mapComponent: MapaComponent;
-
+  @ViewChild(MapComponent) mapComponent: MapComponent;
   usuario:string=''
 
-  
-  
-  
   constructor(private CrudServ:CrudfirebaseService,private alertController: AlertController) { }
 
   // listado_viaje:Viaje[]=[]
@@ -34,9 +28,6 @@ export class ViajePage implements OnInit {
   ngOnInit() {
     this.usuario=localStorage.getItem("usuario") ?? ''
     this.listar()
-
-    
-    
   }
 
   
@@ -46,6 +37,15 @@ export class ViajePage implements OnInit {
       // this.listado_viaje=data
       this.listado_viaje = data as (Viaje & { id: string })[];
     })
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Este Viaje ya a empezado',
+      buttons: ['ok'],
+    });
+
+    await alert.present();
   }
 
   async confirmarModificar(viaje: Viaje & { id: string }) {
@@ -80,18 +80,15 @@ export class ViajePage implements OnInit {
         console.error('Error al modificar el viaje: ', error);
       });
     } 
-    if (viaje.disponibles === 1 ) {
-      this.CrudServ.eliminarViaje(viaje.id)
-    }
-    else {
-      console.warn('No hay asientos disponibles para reducir.');
+    if (viaje.disponibles === 0 ) {
+      this.presentAlert()
     }
   }
 
   verViaje(viaje: Viaje & { id: string }) {
-    this.mapComponent.openMap();
-    this.mapComponent.drawRoute(viaje.ruta.start, viaje.ruta.end); // Dibuja la ruta
-    this.mapComponent.hideSearchForm();
+    this.mapComponent.abrirMapa();
+    this.mapComponent.crearMarcador(viaje.ruta.end[0],viaje.ruta.end[1]);
+    this.mapComponent.dibujarRuta(viaje.ruta.end[0],viaje.ruta.end[1])
   }
   
 

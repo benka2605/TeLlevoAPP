@@ -14,17 +14,17 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'home',
-    loadChildren: () => import('./Pages/home/home.module').then( m => m.HomePageModule),
-    canActivate:[AuthGuard]
-  },
-  {
     path: 'login',
     loadChildren: () => import('./Pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'restablecer',
     loadChildren: () => import('./Pages/restablecer/restablecer.module').then( m => m.RestablecerPageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./Pages/home/home.module').then( m => m.HomePageModule),
+    canActivate:[AuthGuard]
   },
   {
     path: 'programar',
@@ -46,9 +46,14 @@ const routes: Routes = [
     loadChildren: () => import('./Pages/register/register.module').then( m => m.RegisterPageModule)
   },
   {
+    path: 'notificacion',
+    loadChildren: () => import('./Pages/notificacion/notificacion.module').then( m => m.NotificacionPageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./Pages/p404/p404.module').then( m => m.P404PageModule)
   },
+
 
 
 

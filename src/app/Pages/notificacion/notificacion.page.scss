@@ -1,0 +1,22 @@
+.imagen-header {
+    width: 16%;
+    margin: 5px 0 5px 5px;
+}
+
+.texto {
+    color: rgb(169, 175, 76);
+    margin-left: 15px; /* Ajustado para reducir el margen */
+}
+
+.contenedor-header {
+    background-color: rgb(28, 60, 90);
+    display: flex;
+    align-items: center;
+    padding: 10px; /* Añadido padding */
+}
+
+body {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+}

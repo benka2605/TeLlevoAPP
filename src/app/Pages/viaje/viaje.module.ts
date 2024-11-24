@@ -7,8 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { ViajePageRoutingModule } from './viaje-routing.module';
 
 import { ViajePage } from './viaje.page';
+import { MapaComponent } from 'src/app/Components/mapa/mapa.component';
+import { MapComponent } from 'src/app/Components/map/map.component';
 
-import { MapaModule } from 'src/app/Components/mapa/mapa.module';
+
+
 
 @NgModule({
   imports: [
@@ -16,8 +19,7 @@ import { MapaModule } from 'src/app/Components/mapa/mapa.module';
     FormsModule,
     IonicModule,
     ViajePageRoutingModule,
-    MapaModule,
   ],
-  declarations: [ViajePage]
+  declarations: [ViajePage,MapComponent]
 })
 export class ViajePageModule {}

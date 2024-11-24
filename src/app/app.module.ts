@@ -20,14 +20,13 @@ import { MapaModule } from './Components/mapa/mapa.module';
 
 import { FormsModule } from '@angular/forms';
 
-import { getFirestore } from 'firebase/firestore';
 
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),AngularFireAuthModule,
-  AngularFirestoreModule,ConfirmModalModule,FormsModule,MapaModule
+  AngularFirestoreModule,ConfirmModalModule,FormsModule,MapaModule,
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideAnimationsAsync()],
   bootstrap: [AppComponent],
